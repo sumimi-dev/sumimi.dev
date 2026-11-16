@@ -42,6 +42,16 @@ jobs:
         with:
           repository: sumimi-dev/sumimi
           path: source
+          # The sitemap's `lastmod` is the date of the commit that last
+          # touched each page — so the history has to be there.
+          fetch-depth: 0
+
+      # The sitemap is **written from the pages**: one entry per page, with
+      # the date the page last changed. ⇒ ⇒ It cannot be missing a page that
+      # was added, and it cannot claim a date that has nothing to do with
+      # when the page last changed.
+      - name: The sitemap
+        run: python3 source/scripts/gen-sitemap.py
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
